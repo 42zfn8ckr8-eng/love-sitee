@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إلى ملوكتي ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+}
+
+body{
+    background:#500b14;
+    color:white;
+    overflow-x:hidden;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* خلفية القلوب */
+.hearts-bg{
+    position:fixed;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    top:0;
+    left:0;
+    z-index:1;
+    pointer-events:none;
+}
+
+.heart{
+    position:absolute;
+    color:rgba(255,75,110,0.7);
+    animation:floatUp 6s linear infinite;
+    bottom:-50px;
+}
+
+@keyframes floatUp{
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* الكونتينر */
+.container{
+    position:relative;
+    z-index:10;
+    width:100%;
+    max-width:450px;
+    padding:20px;
+}
+
+/* الصفحات */
+.page{
+    display:none;
+    background:rgba(80,11,20,.55);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:30px;
+    padding:30px;
+    box-shadow:0 10px 35px rgba(0,0,0,.4);
+}
+
+.page.active{
+    display:block;
+}
+
+/* القلب */
+.heart-wrapper{
+    position:relative;
+    width:280px;
+    height:280px;
+    margin:40px auto 60px;
+}
+
+.main-heart{
+    width:100%;
+    height:100%;
+    background:#b31e34;
+    position:absolute;
+    transform:rotate(-45deg);
+    border-radius:20px;
+}
+
+.main-heart::before,
+.main-heart::after{
+    content:'';
+    width:100%;
+    height:100%;
+    background:#b31e34;
+    border-radius:50%;
+    position:absolute;
+}
+
+.main-heart::before{
+    top:-50%;
+}
+
+.main-heart::after{
+    left:50%;
+}
+
+.heart-content{
+    position:absolute;
+    width:100%;
+    height:100%;
+    z-index:5;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.heart-content h1{
+    font-size:34px;
+}
+
+.heart-content p{
+    margin-top:10px;
+    opacity:.9;
+}
+
+.input-group{
+    width:85%;
+    margin:auto;
+}
+
+.password-label{
+    display:block;
+    margin-bottom:10px;
+    padding-right:15px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:50px;
+    background:rgba(255,255,255,.12);
+    color:white;
+    outline:none;
+    text-align:center;
+    font-size:16px;
+}
+
+.btn{
+    width:85%;
+    margin-top:25px;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    background:#7d1425;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+    display:block;
+    margin-inline:auto;
+}
+
+.btn:hover{
+    transform:scale(1.03);
+    background:#9a1b30;
+}
+
+/* الكتابة */
+.text-box{
+    font-size:24px;
+    line-height:2;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+.typing::after{
+    content:"|";
+    animation:blink .7s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0}
+}
+
+/* الصوت */
+.audio-player{
+    background:#3a060d;
+    border-radius:20px;
+    padding:15px;
+    margin-top:25px;
+}
+
+.player-title{
+    margin-bottom:15px;
+    color:#ffb3bd;
+    font-weight:bold;
+}
+
+/* التايمر */
+.timer-header{
+    text-align:center;
+    line-height:1.7;
+    font-size:20px;
+    margin-bottom:25px;
+    color:#ffb3bd;
+    font-weight:bold;
+}
+
+.timer-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:30px;
+}
+
+.timer-box{
+    background:rgba(255,255,255,.08);
+    border-radius:15px;
+    padding:15px 5px;
+}
+
+.timer-num{
+    color:#ff4b6e;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.timer-label{
+    margin-top:6px;
+    font-size:12px;
+}
+
+/* الصور */
+.gallery{
+    margin-top:30px;
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.photo-card{
+    background:rgba(255,255,255,.05);
+    padding:12px;
+    border-radius:25px;
+}
+
+.photo-card img{
+    width:100%;
+    border-radius:20px;
+    object-fit:cover;
+    max-height:500px;
+    display:block;
+    transition:.4s;
+}
+
+.photo-card img:hover{
+    transform:scale(1.02);
+}
+
+.photo-desc{
+    margin-top:15px;
+    text-align:center;
+    color:#ffb3bd;
+    line-height:1.7;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts-bg" id="heartsContainer"></div>
+
+<div class="container">
+
+<!-- الصفحة الأولى -->
+<div class="page active" id="page1">
+
+    <div class="heart-wrapper">
+        <div class="main-heart"></div>
+
+        <div class="heart-content">
+            <h1>LOVE</h1>
+            <p>❤️ my soulmate ❤️</p>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label class="password-label">Password</label>
+
+        <input type="password"
+        id="passwordInput"
+        placeholder="password">
+    </div>
+
+    <button class="btn" onclick="checkPassword()">
+        💕 Unlock 💕
+    </button>
+
+</div>
+
+<!-- الصفحة الثانية -->
+<div class="page" id="page2">
+
+    <div style="font-size:40px;text-align:center;margin-bottom:20px;">
+        😍
+    </div>
+
+    <div class="text-box" id="typingText"></div>
+
+    <button class="btn" onclick="goToPage3()">
+        💕 next 💕
+    </button>
+
+    <div class="audio-player">
+
+        <div class="player-title">
+            🎵 حبيبي أغلى من عمري - عمرو دياب
+        </div>
+
+        <audio controls id="bgMusic" style="width:100%;">
+            <source src="https://dl.sndup.net/j7y8/Amr%20Diab%20-%20Habiby%20Aghla%20Mn%20Omry.mp3" type="audio/mpeg">
+        </audio>
+
+    </div>
+
+</div>
+
+<!-- الصفحة الثالثة -->
+<div class="page" id="page3">
+
+    <div class="timer-header">
+        💕 أول مره شوفتك فيها 💕<br>
+        21/9/2021
+    </div>
+
+    <div class="timer-grid">
+
+        <div class="timer-box">
+            <div class="timer-num" id="days">00</div>
+            <div class="timer-label">يوم</div>
+        </div>
+
+        <div class="timer-box">
+            <div class="timer-num" id="hours">00</div>
+            <div class="timer-label">ساعة</div>
+        </div>
+
+        <div class="timer-box">
+            <div class="timer-num" id="minutes">00</div>
+            <div class="timer-label">دقيقة</div>
+        </div>
+
+        <div class="timer-box">
+            <div class="timer-num" id="seconds">00</div>
+            <div class="timer-label">ثانية</div>
+        </div>
+
+    </div>
+
+    <div style="text-align:center;font-size:18px;margin-bottom:20px;">
+        ❤️ كل ثانية بتعدي وانتي في قلبي ❤️
+    </div>
+
+    <!-- الصور -->
+    <div class="gallery">
+
+        <div class="photo-card">
+
+            <!-- صورة التيك توك -->
+            <img src="https://i.postimg.cc/PfL0tJvM/photo1.jpg">
+
+            <div class="photo-desc">
+                انتي اجمل حاجه حصلتلي ❤️
+            </div>
+
+        </div>
+
+        <div class="photo-card">
+
+            <!-- الصورة الثانية -->
+            <img src="https://i.postimg.cc/BQmL2Y6t/photo2.jpg">
+
+            <div class="photo-desc">
+                ضحكتك هي راحتي كلها 🥹💕
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+/* القلوب */
+
+const heartsContainer =
+document.getElementById('heartsContainer');
+
+const heartSymbols =
+['❤️','💖','💕','💗','💘'];
+
+setInterval(()=>{
+
+    const heart =
+    document.createElement('div');
+
+    heart.classList.add('heart');
+
+    heart.innerText =
+    heartSymbols[Math.floor(Math.random()*heartSymbols.length)];
+
+    heart.style.left =
+    Math.random()*100+'vw';
+
+    heart.style.fontSize =
+    (Math.random()*15+15)+'px';
+
+    heart.style.animationDuration =
+    (Math.random()*3+4)+'s';
+
+    heartsContainer.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },7000);
+
+},300);
+
+
+/* الباسوورد */
+
+function checkPassword(){
+
+    const pass =
+    document.getElementById('passwordInput').value;
+
+    if(pass === 'malak'){
+
+        document.getElementById('page1')
+        .classList.remove('active');
+
+        document.getElementById('page2')
+        .classList.add('active');
+
+        startTypingEffect();
+
+        document
+        .getElementById('bgMusic')
+        .play();
+
+    }else{
+
+        alert('الباسوورد غلط 😉');
+
+    }
+}
+
+/* الكتابة */
+
+const loveMessage =
+"ربنا يخليكي ليا يا ملوكتي ❤️ انا مقدرش على زعلك ابداً وعملتلك الموقع ده عشان تعرفي قد ايه انا بحبك 🥹💕";
+
+function startTypingEffect(){
+
+    const textBox =
+    document.getElementById('typingText');
+
+    textBox.innerHTML = '';
+
+    textBox.classList.add('typing');
+
+    let i = 0;
+
+    function type(){
+
+        if(i < loveMessage.length){
+
+            textBox.innerHTML +=
+            loveMessage.charAt(i);
+
+            i++;
+
+            setTimeout(type,40);
+
+        }else{
+
+            textBox.classList.remove('typing');
+
+        }
+    }
+
+    type();
+}
+
+/* الانتقال */
+
+function goToPage3(){
+
+    document.getElementById('page2')
+    .classList.remove('active');
+
+    document.getElementById('page3')
+    .classList.add('active');
+
+    startTimer();
+}
+
+/* التايمر */
+
+function startTimer(){
+
+    const startDate =
+    new Date('2021-09-21T00:00:00');
+
+    setInterval(()=>{
+
+        const now = new Date();
+
+        const difference =
+        now - startDate;
+
+        const days =
+        Math.floor(difference/(1000*60*60*24));
+
+        const hours =
+        Math.floor((difference%(1000*60*60*24))/(1000*60*60));
+
+        const minutes =
+        Math.floor((difference%(1000*60*60))/(1000*60));
+
+        const seconds =
+        Math.floor((difference%(1000*60))/1000);
+
+        document.getElementById('days').innerText = days;
+
+        document.getElementById('hours').innerText =
+        hours < 10 ? '0'+hours : hours;
+
+        document.getElementById('minutes').innerText =
+        minutes < 10 ? '0'+minutes : minutes;
+
+        document.getElementById('seconds').innerText =
+        seconds < 10 ? '0'+seconds : seconds;
+
+    },1000);
+}
+
+</script>
+
+</body>
+</html>
